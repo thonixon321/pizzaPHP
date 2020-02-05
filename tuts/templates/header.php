@@ -1,3 +1,22 @@
+<?php
+  session_start();
+  //override session var
+  // $_SESSION['name'] = 'yoshi';
+
+  //QUERY_STRING is the '?' in url
+  if ($_SERVER['QUERY_STRING'] == 'noname') {
+    //delete session var
+    unset($_SESSION['name']);
+    //clear all vars
+    session_unset();
+  }
+  //set to one of two values based on which one exists (null coalescing)
+  $name = $_SESSION['name'] ?? 'Guest';
+
+  //get cookie
+  $gender = $_COOKIE['gender'] ?? 'Unknown';
+?>
+
 <head>
   <meta charset='UTF-8'>
   <meta name='viewport' content='width=device-width, initial-scale=1.0'>
@@ -31,7 +50,8 @@
     <div class='container'>
       <a href="index.php" class="brand-logo brand-text"> Ninja Pizza </a>
       <ul id="nav-mobile" class="right hide-on-small-and-down">
-
+        <li class='grey-text'>Hello <?php echo htmlspecialchars($name); ?></li>
+        <li class='grey-text'>(<?php echo htmlspecialchars($gender); ?>)</li>
         <li><a href="add.php" class="btn brand z-depth-0"> Add a Pizza </a></li>
 
       </ul>
